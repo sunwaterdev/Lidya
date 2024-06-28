@@ -30,8 +30,8 @@ def listen_and_repeat(last_communication):
             present = True
             message = user_message
         else:
+            print('[*] New communication detected... ')
             llm.reset()
-            # Check if message contain the wakeword
             present = False
             message = None
             for phrase in CONF.get_wakewords():
@@ -41,7 +41,15 @@ def listen_and_repeat(last_communication):
                     break
 
         if present == True:
-            tts.play_generate_audio(json.loads(llm.interact(message))['message'])
+            print('[*] Generation process starting... ')
+            print(f'[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}...')
+            
+            llm_result = json.loads(llm.interact(message))
+
+            print('[*] Generating audio... ')
+            tts.play_generate_audio(llm_result['message'])
+
+            print('[*] Process finished. ')
             last_communication = time.time()
         
         return last_communication
