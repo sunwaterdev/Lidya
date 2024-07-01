@@ -9,6 +9,7 @@ import json
 import libs.tts as tts
 import libs.config as config
 import libs.llm_con as llm_con
+import libs.pluginmanager as pluginmanager
 
 # Load configuration
 CONF = config.Config('./config')
@@ -17,8 +18,12 @@ CONF = config.Config('./config')
 r = sr.Recognizer()
 tts = tts.TTS(CONF.get_lang(), CONF.get_tts_model())
 
+# Load plugins:
+pm = pluginmanager.PluginManager()
+
 # Init LLM
-llm = llm_con.Connector(CONF.get_main_model(), CONF.get_main_service(), CONF.get_apikeys(CONF.get_main_service()), CONF.get_prompt())
+llm = llm_con.Connector(CONF.get_main_model(), CONF.get_main_service(), CONF.get_apikeys(CONF.get_main_service()), CONF.get_prompt().replace('[PLUGINS_LIST]', str(pm.load_plugins())))
+print(llm.prompt)
 
 # Main func
 def listen_and_repeat(last_communication):
@@ -45,6 +50,11 @@ def listen_and_repeat(last_communication):
             print(f'[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}...')
             
             llm_result = json.loads(llm.interact(message))
+
+            plugin_result = pm.process_actions(llm_result['actions'])
+
+            if plugin_result != {}:
+                llm_result = json.loads(llm.interact('PLUGIN RESULTS:' + str(plugin_result)))
 
             print('[*] Generating audio... ')
             tts.play_generate_audio(llm_result['message'])

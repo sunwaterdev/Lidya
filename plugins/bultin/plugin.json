@@ -1,5 +1,0 @@
-{"name": "builtin",
- "version": "0.0.1",
- "description": "The main plugin of Lidya",
- "actions": [{"name": "builtin.time", "description": "Return the current time", "args": []},
-             {"name": "builtin.script", "description": "Run a bash command for actions on the local device. Only for safe usage.", "args": [{"name": "script", "description": "The script."}]}]}

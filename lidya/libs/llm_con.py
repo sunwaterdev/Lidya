@@ -20,6 +20,7 @@ class Connector:
             self.messages = [{'role': 'system', 'content': prompt}]
 
     def interact(self, message):
+        print(message)
         if self.service == "openai":
             self.messages.append({'role': 'user', 'content': message})
             result = openai.chat.completions.create(
