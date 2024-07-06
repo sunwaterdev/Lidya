@@ -63,10 +63,10 @@ def listen_and_repeat(last_communication):
             try:
                 llm_result = json.loads(llm.interact(message))
             except:
-                 playsound('./lidya/ressources/sounds/fail_blip.mp3')
-                 tts.play_generate_audio(CONF.get_messages()[CONF.get_lang()]['llm_error'])
-                 print('[x] Please check LLM configuration. Cannot connect the services ')
-                 stop = (True, 21)
+                playsound('./lidya/ressources/sounds/fail_blip.mp3')
+                tts.play_generate_audio(CONF.get_messages()[CONF.get_lang()]['llm_error'])
+                print('[x] Please check LLM configuration. Cannot connect the services ')
+                stop = (True, 21)
 
 
             plugin_result = pm.process_actions(llm_result['actions'])
