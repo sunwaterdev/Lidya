@@ -3,7 +3,6 @@
 # Made by SunWater_
 
 # Imports
-import speech_recognition as sr
 import time
 import json
 import sys
@@ -11,6 +10,8 @@ import libs.tts as tts
 import libs.config as config
 import libs.llm_con as llm_con
 import libs.pluginmanager as pluginmanager
+import speech_recognition as sr
+from playsound import playsound
 
 # Edit path
 sys.path.append('./')
@@ -30,9 +31,12 @@ llm = llm_con.Connector(CONF.get_main_model(), CONF.get_main_service(), CONF.get
 print(llm.prompt)
 # Main func
 def listen_and_repeat(last_communication):
-    with sr.Microphone() as source:
-        audio = r.listen(source)
-        user_message = r.recognize_google(audio, language=CONF.get_lang())
+    #with sr.Microphone() as source:
+        #audio = r.listen(source)
+        #user_message = r.recognize_google(audio, language=CONF.get_lang())
+        
+        user_message = "ok lydia quel heure est il?"
+
         if (time.time() - last_communication) < 5:
             present = True
             message = user_message
@@ -48,10 +52,18 @@ def listen_and_repeat(last_communication):
                     break
 
         if present == True:
+            playsound('./lidya/ressources/sounds/success_blip.mp3')
             print('[*] Generation process starting... ')
             print(f'[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}...')
             
-            llm_result = json.loads(llm.interact(message))
+            try:
+                llm_result = json.loads(llm.interact(message))
+            except:
+                 playsound('./lidya/ressources/sounds/fail_blip.mp3')
+                 tts.play_generate_audio(CONF.get_messages()[CONF.get_lang()]['llm_error'])
+                 print('[x] Please check LLM configuration. Cannot connect the services ')
+                 sys.exit(21)
+
 
             plugin_result = pm.process_actions(llm_result['actions'])
 
