@@ -49,7 +49,7 @@ soundfile==0.12.1
 SpeechRecognition==3.10.4
 stack-data==0.6.3
 sympy==1.12.1
-tqdm==4.64.0
+tqdm==4.66.4
 traitlets==5.14.3
 typing_extensions==4.12.2
 urllib3==2.2.2
