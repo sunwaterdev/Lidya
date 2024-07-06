@@ -6,10 +6,10 @@
 import time
 import json
 import sys
-import libs.tts as tts
-import libs.config as config
-import libs.llm_con as llm_con
-import libs.pluginmanager as pluginmanager
+from libs import tts
+from libs import config
+from libs import llm_con
+from libs import pluginmanager
 import speech_recognition as sr
 from playsound import playsound
 
