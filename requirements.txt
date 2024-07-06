@@ -1,3 +1,7 @@
+openai
+SpeechRecorgnition
+playsound
+dimits
 annotated-types==0.7.0
 anyio==4.4.0
 asttokens==2.4.1

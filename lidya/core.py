@@ -87,7 +87,7 @@ def listen_and_repeat(last_communication):
 
             plugin_result = pm.process_actions(llm_result["actions"])
 
-            if plugin_result != {}:
+            if not plugin_result:
                 llm_result = json.loads(
                     llm.interact("PLUGIN RESULTS:" + str(plugin_result))
                 )
@@ -105,5 +105,5 @@ def listen_and_repeat(last_communication):
 
 last_communication = 0
 
-while stop == False:
+while stop is False:
     last_communication = listen_and_repeat(last_communication)

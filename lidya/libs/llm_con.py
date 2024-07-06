@@ -33,4 +33,4 @@ class Connector:
 
     def reset(self):
         if self.service == "openai":
-            self.message = [{"role": "system", "content": self.prompt}]
+            self.messages = [{"role": "system", "content": self.prompt}]

@@ -1,6 +1,5 @@
 import os
 import json
-import ipdb
 
 
 class PluginManager:
@@ -15,8 +14,8 @@ class PluginManager:
             else:
                 result = getattr(main_class, action)()
             return result
-        else:
-            print(f"The action'{action}' of plugin '{plugin_name}' doesn't exsists.")
+        
+        print(f"The action'{action}' of plugin '{plugin_name}' doesn't exsists.")
 
     def process_actions(self, actions):
         results = {}
