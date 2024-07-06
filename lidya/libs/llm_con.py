@@ -1,14 +1,16 @@
-# Connector for your favorites LLMs
+#  Connector for your favorites LLMs
 # Support
 # [x] Ollama
 # [v] OpenAI
 # [x] Mistral
 # [x] Claude
 
-# Imports
-import openai # ChatGPT
+#  Imports
+import openai  # ChatGPT
 
 # Connector
+
+
 class Connector:
     def __init__(self, model, service, api_key, prompt):
         self.model = model
@@ -33,4 +35,3 @@ class Connector:
     def reset(self):
         if self.service == "openai":
             self.message = [{'role': 'system', 'content': self.prompt}]
-        

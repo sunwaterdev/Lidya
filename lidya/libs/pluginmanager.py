@@ -16,10 +16,9 @@ class PluginManager:
                 result = getattr(main_class, action)()
             return result
         else:
-            print(f"The action'{action}' of plugin '{plugin_name}' doesn't exsists.")
+            print(
+                f"The action'{action}' of plugin '{plugin_name}' doesn't exsists.")
 
-        
-    
     def process_actions(self, actions):
         results = {}
 
@@ -30,7 +29,8 @@ class PluginManager:
                 result = self.execute_plugin_action(action_name)
             else:
                 print(action['args'])
-                mapping = {element['name']: element['value'] for element in action['args']}
+                mapping = {element['name']: element['value']
+                           for element in action['args']}
                 print(mapping)
                 result = self.execute_plugin_action(action_name, args=mapping)
 
@@ -48,11 +48,11 @@ class PluginManager:
 
         for plugin in plugins:
             try:
-                plugin_conf = open('./plugins/'+plugin+'/plugin.json', 'r')
+                plugin_conf = open('./plugins/' + plugin + '/plugin.json', 'r')
                 plugin_json_conf = json.load(plugin_conf)
             except Exception as e:
                 print(f'The {plugin} plugin was not loaded correctly: {e}')
-        
+
             plugin_manager_json.append(plugin_json_conf)
 
         print(plugin_manager_json)
