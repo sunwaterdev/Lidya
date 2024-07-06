@@ -1,3 +1,8 @@
+"""
+Main Lidya launcher
+Created by SunWater_
+"""
+
 # Lidya project core.
 # For security reasons, please do not modify this part of the code.
 # Made by SunWater_
