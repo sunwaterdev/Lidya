@@ -29,13 +29,17 @@ pm = pluginmanager.PluginManager()
 # Init LLM
 llm = llm_con.Connector(CONF.get_main_model(), CONF.get_main_service(), CONF.get_apikeys(CONF.get_main_service()), CONF.get_prompt().replace('[PLUGINS_LIST]', str(pm.load_plugins())))
 print(llm.prompt)
+
+# Stop event
+stop = False
+
 # Main func
 def listen_and_repeat(last_communication):
-    #with sr.Microphone() as source:
-        #audio = r.listen(source)
-        #user_message = r.recognize_google(audio, language=CONF.get_lang())
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+        user_message = r.recognize_google(audio, language=CONF.get_lang())
         
-        user_message = "ok lydia quel heure est il?"
+        # user_message = "ok lydia quel heure est il?"
 
         if (time.time() - last_communication) < 5:
             present = True
@@ -62,7 +66,7 @@ def listen_and_repeat(last_communication):
                  playsound('./lidya/ressources/sounds/fail_blip.mp3')
                  tts.play_generate_audio(CONF.get_messages()[CONF.get_lang()]['llm_error'])
                  print('[x] Please check LLM configuration. Cannot connect the services ')
-                 sys.exit(21)
+                 stop = (True, 21)
 
 
             plugin_result = pm.process_actions(llm_result['actions'])
@@ -82,4 +86,5 @@ def listen_and_repeat(last_communication):
 
 last_communication = 0
 
-last_communication = listen_and_repeat(last_communication)
+while stop == False:
+    last_communication = listen_and_repeat(last_communication)
