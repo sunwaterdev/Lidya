@@ -30,11 +30,9 @@ class Connector:
             )
             print(result)
             return result.choices[0].message.content
-        
         return None
 
     def reset(self):
         """Reset messages history."""
         if self.service == "openai":
             self.messages = [{"role": "system", "content": self.prompt}]
-
