@@ -1,3 +1,5 @@
+"""Lidya TTS - Made by SunWater_"""
+
 # Imports
 from dimits import Dimits
 
@@ -5,6 +7,8 @@ from dimits import Dimits
 
 
 class TTS:
+    """
+    Main TTS Lib for Lidya."""
     def __init__(self, lang, voice):
         self.lang = lang
         self.voice = voice
@@ -13,12 +17,14 @@ class TTS:
         self.dt = Dimits(self.model)
 
     def generate_audio(self, text, location):
+        """Generate and save generated audio"""
         self.dt.text_2_audio_file(
             text, location.split("/")[-1], "/".join(location.split("/")[0:-1])
         )
         return location
 
     def play_generate_audio(self, text):
+        "Play a generated audio."
         self.dt.text_2_speech(text)
 
 
