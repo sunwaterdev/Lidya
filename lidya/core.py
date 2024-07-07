@@ -40,7 +40,7 @@ llm = llm_con.Connector(
 )
 
 # Stop event
-stop = False
+STOP = False
 
 # Main func
 
@@ -83,7 +83,7 @@ def listen_and_repeat(last_communication):
                 print(
                     "[x] Please check LLM configuration. Cannot connect the services "
                 )
-                stop = (True, 21)
+                STOP = (True, 21)
 
             plugin_result = pm.process_actions(llm_result["actions"])
 
@@ -100,10 +100,7 @@ def listen_and_repeat(last_communication):
 
         return last_communication
 
-        time.sleep(10)
 
-
-last_communication = 0
-
-while stop is False:
-    last_communication = listen_and_repeat(last_communication)
+LAST_COMMUNICATION = 0
+while STOP is False:
+    LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)

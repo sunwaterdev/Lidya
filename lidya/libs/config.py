@@ -14,10 +14,17 @@ class Config:
 
         self.config_folder = config_folder
 
-        self.wakewords = json.load(open(wakewords_file, "r"))
-        self.config = json.load(open(config_file, "r"))
-        self.keys = json.load(open(keys_file, "r"))
-        self.messages = json.load(open(messages_file, "r"))
+        with json.load(open(wakewords_file, "r")) as f:
+            self.wakewords = f
+        
+        with json.load(open(config_file, "r")) as f:
+            self.config = f
+        
+        with json.load(open(keys_file, "r")) as f:
+            self.keys = f
+
+        with json.load(open(messages_file, "r")) as f:
+            self.messages = f
 
         self.lang = self.config["main_language"]
 
