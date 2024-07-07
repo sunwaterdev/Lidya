@@ -16,17 +16,17 @@ class Config:
 
         self.config_folder = config_folder
 
-        with json.load(open(wakewords_file, "r", encoding="utf-8")) as f:
-            self.wakewords = f
+        with open(wakewords_file, "r", encoding="utf-8") as file:
+            self.wakewords = json.load(file)
 
-        with json.load(open(config_file, "r", encoding="utf-8")) as f:
-            self.config = f
+        with open(config_file, "r", encoding="utf-8") as file:
+            self.config = json.load(file)
 
-        with json.load(open(keys_file, "r", encoding="utf-8")) as f:
-            self.keys = f
+        with open(keys_file, "r", encoding="utf-8") as file:
+            self.keys = json.load(file)
 
-        with json.load(open(messages_file, "r", encoding="utf-8")) as f:
-            self.messages = f
+        with open(messages_file, "r", encoding="utf-8") as file:
+            self.messages = json.load(file)
 
         self.lang = self.config["main_language"]
 
