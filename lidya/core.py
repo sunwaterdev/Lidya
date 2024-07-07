@@ -46,14 +46,6 @@ STOP = False
 
 
 def listen_and_repeat(last_communication):
-    """AI is creating summary for listen_and_repeat
-
-    Args:
-        last_communication ([type]): [description]
-
-    Returns:
-        [type]: [description]
-    """
     with sr.Microphone() as source:
         audio = r.listen(source)
         user_message = r.recognize_google(audio, language=CONF.get_lang())
