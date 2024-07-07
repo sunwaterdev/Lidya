@@ -47,7 +47,7 @@ def listen_and_repeat(last_communication):
         audio = r.listen(source)
         user_message = r.recognize_google(audio, language=CONF.get_lang())
 
-        # user_message = "ok lydia quel heure est il?"
+        user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
 
         if (time.time() - last_communication) < 5:
             present = True
@@ -84,7 +84,6 @@ def listen_and_repeat(last_communication):
 
             print('[*] Processing plugins... ')
             plugin_result = pm.process_actions(llm_result["actions"])
-            print(plugin_result)
 
             if plugin_result:
                 print('[!] Plugin usage detected... ')

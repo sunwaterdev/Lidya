@@ -30,10 +30,9 @@ class PluginManager:
             if action["args"] == {}:
                 result = self.execute_plugin_action(action_name)
             else:
-                print(action["args"])
-                mapping = {
-                    element["name"]: element["value"] for element in action["args"]
-                }
+                print(action)
+                mapping = {action['name']: action['value']}
+
                 print(mapping)
                 result = self.execute_plugin_action(action_name, args=mapping)
 
