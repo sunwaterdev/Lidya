@@ -11,6 +11,7 @@ Created by SunWater_
 import time
 import json
 import sys
+import openai
 from libs import tts
 from libs import config
 from libs import llm_con
@@ -39,13 +40,9 @@ llm = llm_con.Connector(
     CONF.get_prompt().replace("[PLUGINS_LIST]", str(pm.load_plugins())),
 )
 
-# Stop event
-STOP = False
-
 # Main func
-
-
 def listen_and_repeat(last_communication):
+    """Main listen & repeat function"""
     with sr.Microphone() as source:
         audio = r.listen(source)
         user_message = r.recognize_google(audio, language=CONF.get_lang())
@@ -75,7 +72,7 @@ def listen_and_repeat(last_communication):
 
             try:
                 llm_result = json.loads(llm.interact(message))
-            except BaseException:
+            except openai.AuthenticationError:
                 playsound("./lidya/ressources/sounds/fail_blip.mp3")
                 tts.play_generate_audio(
                     CONF.get_messages()[CONF.get_lang()]["llm_error"]
@@ -83,7 +80,7 @@ def listen_and_repeat(last_communication):
                 print(
                     "[x] Please check LLM configuration. Cannot connect the services "
                 )
-                STOP = (True, 21)
+                sys.exit(21)
 
             plugin_result = pm.process_actions(llm_result["actions"])
 
@@ -100,7 +97,7 @@ def listen_and_repeat(last_communication):
 
         return last_communication
 
-
+# Stop event
 LAST_COMMUNICATION = 0
-while STOP is False:
+while 1:
     LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)

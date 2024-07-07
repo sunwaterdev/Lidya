@@ -44,7 +44,6 @@ class Connector:
          @return The user's response to the user or None if there is 
          no response to the inputted message
         """
-        """Interact with the LLM"""
         # Create a new message in the chat.
         if self.service == "openai":
             self.messages.append({"role": "user", "content": message})
@@ -60,7 +59,6 @@ class Connector:
          Reset the history to the default state. This is called 
          when the user presses the reset button in the service
         """
-        """Reset messages history."""
         # This method is called when the service is openai
         if self.service == "openai":
             self.messages = [{"role": "system", "content": self.prompt}]
