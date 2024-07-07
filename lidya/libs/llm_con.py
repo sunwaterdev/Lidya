@@ -10,8 +10,6 @@
 import openai  # ChatGPT
 
 # Connector
-
-
 class Connector:
     """Lidya LLM connector"""
     def __init__(self, model, service, api_key, prompt):
@@ -25,7 +23,6 @@ class Connector:
 
     def interact(self, message):
         """Interact with the LLM"""
-        print(message)
         if self.service == "openai":
             self.messages.append({"role": "user", "content": message})
             result = openai.chat.completions.create(
@@ -40,5 +37,4 @@ class Connector:
         """Reset messages history."""
         if self.service == "openai":
             self.messages = [{"role": "system", "content": self.prompt}]
-        
-        return None
+
