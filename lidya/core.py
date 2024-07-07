@@ -87,6 +87,7 @@ def listen_and_repeat(last_communication):
                 plugin_result = pm.process_actions(llm_result["actions"])
             else:
                 plugin_result = None
+                print('[x] The LLM forgot to provide any actions. Skiped.')
 
             if plugin_result:
                 print('[!] Plugin usage detected... ')
