@@ -16,6 +16,7 @@ class PluginManager:
             return result
        
         print(f"The action'{action}' of plugin '{plugin_name}' doesn't exsists.")
+        return None
 
     def process_actions(self, actions):
         results = {}
