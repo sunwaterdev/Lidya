@@ -83,7 +83,10 @@ def listen_and_repeat(last_communication):
                 sys.exit(21)
 
             print('[*] Processing plugins... ')
-            plugin_result = pm.process_actions(llm_result["actions"])
+            if "actions" in llm_result.keys():
+                plugin_result = pm.process_actions(llm_result["actions"])
+            else:
+                plugin_result = None
 
             if plugin_result:
                 print('[!] Plugin usage detected... ')
@@ -102,4 +105,8 @@ def listen_and_repeat(last_communication):
 # Stop event
 LAST_COMMUNICATION = 0
 while 1:
-    LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)
+    try:
+        LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)
+
+    except sr.exceptions.UnknownValueError:
+        pass
