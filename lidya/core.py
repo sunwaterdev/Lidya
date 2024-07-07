@@ -72,7 +72,7 @@ def listen_and_repeat(last_communication):
 
             try:
                 llm_result = json.loads(llm.interact(message))
-            except openai.AuthenticationError:
+            except openai.APIConnectionError:
                 playsound("./lidya/ressources/sounds/fail_blip.mp3")
                 tts.play_generate_audio(
                     CONF.get_messages()[CONF.get_lang()]["llm_error"]
@@ -82,9 +82,12 @@ def listen_and_repeat(last_communication):
                 )
                 sys.exit(21)
 
+            print('[*] Processing plugins... ')
             plugin_result = pm.process_actions(llm_result["actions"])
+            print(plugin_result)
 
-            if not plugin_result:
+            if plugin_result:
+                print('[!] Plugin usage detected... ')
                 llm_result = json.loads(
                     llm.interact("PLUGIN RESULTS:" + str(plugin_result))
                 )
