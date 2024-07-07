@@ -16,10 +16,10 @@ class Config:
 
         with json.load(open(wakewords_file, "r")) as f:
             self.wakewords = f
-        
+
         with json.load(open(config_file, "r")) as f:
             self.config = f
-        
+
         with json.load(open(keys_file, "r")) as f:
             self.keys = f
 

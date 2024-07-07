@@ -1,4 +1,5 @@
 """Lidya LLM connectors. Only work for OPENAI for the moment."""
+
 #  Connector for your favorites LLMs
 # Support
 # [x] Ollama
@@ -9,9 +10,11 @@
 #  Imports
 import openai  # ChatGPT
 
+
 # Connector
 class Connector:
     """Lidya LLM connector"""
+
     def __init__(self, model, service, api_key, prompt):
         self.model = model
         self.service = service

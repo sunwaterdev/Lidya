@@ -48,7 +48,7 @@ class PluginManager:
         for plugin in plugins:
             try:
                 with open("./plugins/" + plugin + "/plugin.json", "r") as plugin_conf:
-                    plugin_json_conf = json.load(plugin_conf)      
+                    plugin_json_conf = json.load(plugin_conf)
             except Exception as e:
                 print(f"The {plugin} plugin was not loaded correctly: {e}")
 

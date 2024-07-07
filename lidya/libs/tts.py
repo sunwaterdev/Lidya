@@ -9,6 +9,7 @@ from dimits import Dimits
 class TTS:
     """
     Main TTS Lib for Lidya."""
+
     def __init__(self, lang, voice):
         self.lang = lang
         self.voice = voice
