@@ -11,7 +11,7 @@ You will be able to choose several solutions to install Lidya. We recommend the 
 
 ### 1. Automatic installation
 You will be able to install Lydia completely automatically using these `bash` commands:
-```bash
+```sh
 chmod 755 ./build.sh
 ./build.sh
 ```
