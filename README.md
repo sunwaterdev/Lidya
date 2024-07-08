@@ -22,4 +22,28 @@ You can also install Lidya manually if you have a particular structure or want t
  - Installing Python3: `sudo apt install python3`
  - Installation of libraries: `sudo apt install python3-pip portaudio19-dev`
  - Installation of Python libraries: `pip install -r requirements.txt`
+
+
 Lydia is finally settled. If an error occurs, do not hesitate to create an issue on GitHub.
+
+
+## Configuration
+As with installation, you can install Lydia either manually or automatically. We recommend that you do this automatically.
+
+### 1. Automatic installation
+You will be able to install Lidya by executing the following commands:
+```sh
+chmod 755 ./config.sh
+./config.sh
+```
+You will have to answer a few questions and your configuration files will automatically be created for the English 🇬🇧 language. You can change the language manually in the files but we will quickly add the ability to install new languages ​​via the wizard.
+
+### 2. Manual installation
+Installation files are not included in the git repository. They are in `.gitignore` for security reasons (API keys). Here are the files you need to create in the `config` folder:
+ - `messages.json`. Here is the default file: https://pastebin.com/raw/4BaVZZS7
+ - `config.json`. Here is the default file: https://pastebin.com/raw/Rmu8qxB9
+ - `keys.json`. Here is the default file: https://pastebin.com/raw/7uK49WRr
+ - `wakewords.json`. Here is the default file: https://pastebin.com/raw/1WGYn2Zk.
+You must complete them according to your uses. The STT models are here: https://github.com/rhasspy/piper/releases/tag/v0.0.2, available in many languages.
+
+You are ready to use Lydia.
