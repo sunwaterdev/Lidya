@@ -15,3 +15,11 @@ You will be able to install Lydia completely automatically using these `bash` co
 chmod 755 ./build.sh
 ./build.sh
 ```
+
+### 2. Manual installation
+You can also install Lidya manually if you have a particular structure or want to control all actions on your system. Here's how you should do it:
+ - Update the system: `sudo apt update && sudo apt upgrade`
+ - Installing Python3: `sudo apt install python3`
+ - Installation of libraries: `sudo apt install python3-pip portaudio19-dev`
+ - Installation of Python libraries: `pip install -r requirements.txt`
+Lydia is finally settled. If an error occurs, do not hesitate to create an issue on GitHub.
