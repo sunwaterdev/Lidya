@@ -10,3 +10,8 @@ In order to properly install Lidya, we strongly recommend using a Python virtual
 You will be able to choose several solutions to install Lidya. We recommend the first one.
 
 ### 1. Automatic installation
+You will be able to install Lydia completely automatically using these `bash` commands:
+```bash
+chmod 755 ./build.sh
+./build.sh
+```
