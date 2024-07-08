@@ -12,6 +12,10 @@ CONFIG_URL = "https://pastebin.com/raw/Rmu8qxB9"
 MESSAGES_URL = "https://pastebin.com/raw/4BaVZZS7"
 KEYS_URL = "https://pastebin.com/raw/7uK49WRr"
 WAKEWORDS_URL = "https://pastebin.com/raw/1WGYn2Zk"
+CONFIG_FILE = "./config/config.json"
+MESSAGES_FILE = "./config/messages.json"
+KEYS_FILE = "./config/keys.json"
+WAKEWORDS_FILE = "./config/wakewords.json"
 
 print('[*] Collecting default configurations... ')
 CONFIG = json.loads(requests.get(CONFIG_URL, timeout=500).text)
@@ -37,8 +41,6 @@ while VALIDATED is False:
 print('[*] Updating configuration... ')
 KEYS['openai'] = OPENAI_KEY
 
-
-
 # Collect favorite model
 OPENAI_FAV_MODEL = input('[?] What is your favorite OpenAI llm model [gpt-3.5-turbo]: ')
 
@@ -48,3 +50,23 @@ if OPENAI_FAV_MODEL == "":
 
 print('[*] Updating configuration... ')
 CONFIG['main_model'] = OPENAI_FAV_MODEL
+
+print('[*] Writing configuration... ')
+
+with open(CONFIG_FILE, 'w', encoding="utf8") as f:
+    f.write(json.dumps(CONFIG))
+
+with open(KEYS_FILE, 'w', encoding="utf8") as f:
+    f.write(json.dumps(KEYS))
+
+with open(WAKEWORDS_FILE, 'w', encoding="utf8") as f:
+    f.write(json.dumps(WAKEWORDS))
+
+with open(MESSAGES_FILE, 'w', encoding="utf8") as f:
+    f.write(json.dumps(MESSAGES))
+
+print('The assistant is ready for use! \
+Note that you can change the STT \
+language and model in the setting\
+s outside of the wizard. However, \
+we will soon add this functionality to the assistant.')

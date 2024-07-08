@@ -1,2 +1,4 @@
 plugins/*
 lidya/libs/__pycache__
+config/*
+config
