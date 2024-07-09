@@ -37,7 +37,7 @@ chmod 755 ./config.sh
 ```
 You will have to answer a few questions and your configuration files will automatically be created for the English 🇬🇧 language. You can change the language manually in the files but we will quickly add the ability to install new languages ​​via the wizard.
 
-### 2. Manual installation
+### 2. Manual installation
 
 Installation files are not included in the git repository. They are in `.gitignore` for security reasons (API keys). Here are the files you need to create in the `config` folder:
  - `messages.json`. Here is the default file: https://pastebin.com/raw/4BaVZZS7
