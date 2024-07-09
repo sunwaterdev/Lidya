@@ -66,6 +66,7 @@ Create an issue on GitHub if you have any problem.
 
 ## Support
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/sunwaterdev/Lidya/issues)
+
 If you like the project, or want to support me, a star on GitHub or a donation (via Amazon gift card) are welcome. Here is my email: contact.sunwater@gmail.com.
 Note that a problem-solving issue also helps me improve this project.
 
