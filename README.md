@@ -4,7 +4,7 @@
 [![Dependabot Updates](https://github.com/sunwaterdev/Lidya/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/dependabot/dependabot-updates)
 [![Pylint](https://github.com/sunwaterdev/Lidya/actions/workflows/pylint.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/pylint.yml)
 [![Code Climate](https://codeclimate.com/github/sunwaterdev/Lidya/badges/gpa.svg)](https://codeclimate.com/github/sunwaterdev/Lidya)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/sunwaterdev/Lidya/issues)
+![GitHub License](https://img.shields.io/github/license/sunwaterdev/Lidya)
 
 # 🤖 Discover Lidya
 Lidya is a voice assistant equipped with plugins allowing your favorite LLMs to perform complex actions quickly.
