@@ -47,3 +47,16 @@ Installation files are not included in the git repository. They are in `.gitigno
 You must complete them according to your uses. The STT models are here: https://github.com/rhasspy/piper/releases/tag/v0.0.2, available in many languages.
 
 You are ready to use Lydia.
+
+## Launch Lidya
+You can now launch Lydia by launching:
+```sh
+./lydia.sh
+```
+
+## Troubleshooting
+Create an issue on GitHub if you have any problem.
+
+## Support
+If you like the project, or want to support me, a star on GitHub or a donation (via Amazon gift card) are welcome. Here is my email: contact.sunwater@gmail.com.
+Note that a problem-solving issue also helps me improve this project.
