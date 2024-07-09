@@ -7,6 +7,8 @@
 ![GitHub License](https://img.shields.io/github/license/sunwaterdev/Lidya)
 
 <!-- Place this tag where you want the button to render. -->
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 <a class="github-button" href="https://github.com/sunwaterdev/Lidya" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Star sunwaterdev/Lidya on GitHub">Star</a>
 
 # 🤖 Discover Lidya
