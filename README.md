@@ -1,3 +1,4 @@
+[![Codacy Security Scan](https://github.com/sunwaterdev/Lidya/actions/workflows/codacy.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/codacy.yml)
 # 🤖 Discover Lidya
 Lidya is a voice assistant equipped with plugins allowing your favorite LLMs to perform complex actions quickly.
 
