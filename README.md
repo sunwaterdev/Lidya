@@ -49,7 +49,7 @@ You must complete them according to your uses. The STT models are here: https://
 You are ready to use Lydia.
 
 ## Launch Lidya
-You can now launch Lydia by launching:
+You can now start Lydia by launching:
 ```sh
 ./lydia.sh
 ```
