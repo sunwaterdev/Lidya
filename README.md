@@ -61,6 +61,6 @@ Create an issue on GitHub if you have any problem.
 If you like the project, or want to support me, a star on GitHub or a donation (via Amazon gift card) are welcome. Here is my email: contact.sunwater@gmail.com.
 Note that a problem-solving issue also helps me improve this project.
 
-## And then?
+## And then?
 We will try to integrate a marketplace system for plugins, and create new plugins to perform even more actions.
 We will also improve our STT system to make it faster and more efficient.
