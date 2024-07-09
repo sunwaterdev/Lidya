@@ -1,4 +1,8 @@
-[![Codacy Security Scan](https://github.com/sunwaterdev/Lidya/actions/workflows/codacy.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/codacy.yml)[![Bandit](https://github.com/sunwaterdev/Lidya/actions/workflows/bandit.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/bandit.yml)[![CodeQL](https://github.com/sunwaterdev/Lidya/actions/workflows/codeql.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/codeql.yml)[![Dependabot Updates](https://github.com/sunwaterdev/Lidya/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/dependabot/dependabot-updates)[![Pylint](https://github.com/sunwaterdev/Lidya/actions/workflows/pylint.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/pylint.yml)
+[![Codacy Security Scan](https://github.com/sunwaterdev/Lidya/actions/workflows/codacy.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/codacy.yml)
+[![Bandit](https://github.com/sunwaterdev/Lidya/actions/workflows/bandit.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/bandit.yml)
+[![CodeQL](https://github.com/sunwaterdev/Lidya/actions/workflows/codeql.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/codeql.yml)
+[![Dependabot Updates](https://github.com/sunwaterdev/Lidya/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/dependabot/dependabot-updates)
+[![Pylint](https://github.com/sunwaterdev/Lidya/actions/workflows/pylint.yml/badge.svg)](https://github.com/sunwaterdev/Lidya/actions/workflows/pylint.yml)
 [![Code Climate](https://codeclimate.com/github/sunwaterdev/Lidya/badges/gpa.svg)](https://codeclimate.com/github/sunwaterdev/Lidya)
 # 🤖 Discover Lidya
 Lidya is a voice assistant equipped with plugins allowing your favorite LLMs to perform complex actions quickly.
