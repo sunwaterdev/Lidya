@@ -70,7 +70,8 @@ CONFIG['main_model'] = OPENAI_FAV_MODEL
 
 # Download model
 AVILABLES_LANGUAGES = MODELS.keys()
-USER_LANGUAGE = Prompt.ask('[bold blue][?][/bold blue] 🗣️  What language do you speak best', choices=AVILABLES_LANGUAGES, default="en_US")
+USER_LANGUAGE = Prompt.ask('[bold blue][?][/bold blue] 🗣️  What language do you speak best', 
+                           choices=AVILABLES_LANGUAGES, default="en_US")
 STT_MODEL_URL = MODELS[USER_LANGUAGE]
 with console.status(" 🤖 Fetching your model... You have time to get some fresh air!",
                     spinner="dots12",
