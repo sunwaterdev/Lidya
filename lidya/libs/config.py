@@ -70,13 +70,13 @@ class Config:
         messages_file = self.config_folder + "/messages.json"
 
         with open(wakewords_file, "a", encoding="utf-8") as file:
-            file.write(json.dump(self.wakewords))
+            file.write(json.dumps(self.wakewords))
 
         with open(config_file, "a", encoding="utf-8") as file:
-            file.write(json.dump(self.config))
+            file.write(json.dumps(self.config))
 
         with open(keys_file, "a", encoding="utf-8") as file:
-            file.write(json.dump(self.keys))
+            file.write(json.dumps(self.keys))
 
         with open(messages_file, "a", encoding="utf-8") as file:
-            file.write(json.dump(self.messages))
+            file.write(json.dumps(self.messages))
