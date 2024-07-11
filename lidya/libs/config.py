@@ -63,20 +63,21 @@ class Config:
         return self.messages
 
     def rewirte_config(self):
-        """Rewirte the entire configuration"""
-        wakewords_file = self.config_folder + "/wakewords.json"
-        config_file = self.config_folder + "/config.json"
-        keys_file = self.config_folder + "/keys.json"
-        messages_file = self.config_folder + "/messages.json"
+        """Rewirte every configuration"""
+        files = {
+            "wakewords_file": self.config_folder + "/wakewords.json",
+            "config_file": self.config_folder + "/config.json",
+            "keys_file": self.config_folder + "/keys.json",
+            "messages_file": self.config_folder + "/messages.json"
+        }
 
-        with open(wakewords_file, "a", encoding="utf-8") as file:
-            file.write(json.dumps(self.wakewords))
-
-        with open(config_file, "a", encoding="utf-8") as file:
-            file.write(json.dumps(self.config))
-
-        with open(keys_file, "a", encoding="utf-8") as file:
-            file.write(json.dumps(self.keys))
-
-        with open(messages_file, "a", encoding="utf-8") as file:
-            file.write(json.dumps(self.messages))
+        for key, value in files.items():
+            with open(value, "a", encoding="utf-8") as file:
+                if key == "wakewords_file":
+                    file.write(json.dumps(self.wakewords))
+                elif key == "config_file":
+                    file.write(json.dumps(self.config))
+                elif key == "keys_file":
+                    file.write(json.dumps(self.keys))
+                elif key == "messages_file":
+                    file.write(json.dumps(self.messages))
