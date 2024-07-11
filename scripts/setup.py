@@ -84,7 +84,7 @@ with console.status(" 🤖 Fetching your model... You have time to get some fres
                 f.write(chunk)
 
     with tarfile.open('./models/'+local_filename) as f:
-        f.extractall('./models/'+strip_extension(local_filename, 
+        f.extractall('./models/'+strip_extension(local_filename,
                                                  extensions=[".tar.bz2", ".tar.gz"]))
         f.close()
 
