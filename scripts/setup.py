@@ -5,14 +5,14 @@ License: GPLv3"""
 
 # Imports
 import re
+import tarfile
 import json
 import requests
-import tarfile 
 from rich import print as dprint
 from rich.console import Console
 from rich.prompt import Prompt
 
-def strip_extension(fn: str, extensions=[".tar.bz2", ".tar.gz"]):
+def strip_extension(fn: str, extensions):
     """Remove extensions from file"""
     for ext in extensions:
         if fn.endswith(ext):
@@ -76,17 +76,17 @@ with console.status(" 🤖 Fetching your model... You have time to get some fres
                     spinner="dots12",
                     spinner_style="blue") as progress:
     local_filename = STT_MODEL_URL.split('/')[-1]
-    with requests.get(STT_MODEL_URL, stream=True) as r:
+    with requests.get(STT_MODEL_URL, stream=True, timeout=1000) as r:
         r.raise_for_status()
         with open("./models/"+local_filename, 'wb') as f:
             for chunk in r.iter_content(chunk_size=8192):
                 f.write(chunk)
 
     with tarfile.open('./models/'+local_filename) as f:
-        f.extractall('./models/'+strip_extension(local_filename))
+        f.extractall('./models/'+strip_extension(local_filename, extensions=[".tar.bz2", ".tar.gz"]))
         f.close()
 
-    CONFIG['tts_model'] = strip_extension(local_filename)
+    CONFIG['tts_model'] = strip_extension(local_filename, extensions=[".tar.bz2", ".tar.gz"])
     CONFIG['main_language'] = USER_LANGUAGE
 
 # Write configuration

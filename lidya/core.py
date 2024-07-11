@@ -72,12 +72,9 @@ def listen_and_repeat(last_communication):
                     break
 
         if present:
-            print('1')
             song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
                                           format="mp3")
-            print('3')
             play(song)
-            print('2')
             print("[*] Generation process starting... ")
             print(
                 f"[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}..."
