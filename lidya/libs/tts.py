@@ -15,7 +15,9 @@ class TTS:
          Initialize the Dimits object. This is the constructor for the Vehicle class.
            You need to call this before you use the Vehicle class.
         """
-        self.model = dimits.TextToSpeechModel(f'./models/{model}/{model}.onnx')
+
+        model_name = model.replace('voice-', '')
+        self.model = dimits.TextToSpeechModel(f'./models/{model}/{model_name}.onnx')
 
     def generate_audio(self, text, location):
         """

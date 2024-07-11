@@ -53,6 +53,7 @@ def listen_and_repeat(last_communication):
     with sr.Microphone() as source:
         audio = r.listen(source)
         user_message = r.recognize_google(audio, language=CONF.get_lang())
+        print(user_message)
 
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
 
@@ -71,9 +72,12 @@ def listen_and_repeat(last_communication):
                     break
 
         if present:
+            print('1')
             song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
                                           format="mp3")
+            print('3')
             play(song)
+            print('2')
             print("[*] Generation process starting... ")
             print(
                 f"[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}..."
