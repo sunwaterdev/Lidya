@@ -2,3 +2,7 @@ plugins/*
 lidya/libs/__pycache__
 config/*
 config
+cache
+cache/*
+models
+models/*

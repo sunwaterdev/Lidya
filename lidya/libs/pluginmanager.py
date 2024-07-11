@@ -30,10 +30,8 @@ class PluginManager:
             if action["args"] == {}:
                 result = self.execute_plugin_action(action_name)
             else:
-                print(action)
                 mapping = {action['name']: action['value']}
 
-                print(mapping)
                 result = self.execute_plugin_action(action_name, args=mapping)
 
             if result is not None:
@@ -58,7 +56,5 @@ class PluginManager:
                 print(f"The {plugin} plugin was not loaded correctly: FileNotFoundError.")
 
             plugin_manager_json.append(plugin_json_conf)
-
-        print(plugin_manager_json)
 
         return plugin_manager_json

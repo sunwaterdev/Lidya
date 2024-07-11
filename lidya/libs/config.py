@@ -61,3 +61,22 @@ class Config:
     def get_messages(self):
         """Lidya pre-created messages loader"""
         return self.messages
+
+    def rewirte_config(self):
+        """Rewirte the entire configuration"""
+        wakewords_file = self.config_folder + "/wakewords.json"
+        config_file = self.config_folder + "/config.json"
+        keys_file = self.config_folder + "/keys.json"
+        messages_file = self.config_folder + "/messages.json"
+
+        with open(wakewords_file, "a", encoding="utf-8") as file:
+            file.write(json.dump(self.wakewords))
+
+        with open(config_file, "a", encoding="utf-8") as file:
+            file.write(json.dump(self.config))
+
+        with open(keys_file, "a", encoding="utf-8") as file:
+            file.write(json.dump(self.keys))
+
+        with open(messages_file, "a", encoding="utf-8") as file:
+            file.write(json.dump(self.messages))

@@ -16,23 +16,29 @@ from libs import tts
 from libs import config
 from libs import llm_con
 from libs import pluginmanager
+from pydub import AudioSegment
+from pydub.playback import play
 import speech_recognition as sr
-from playsound import playsound
 
 # Edit path
 sys.path.append("./")
 
 # Load configuration
+print('[*] Loading config... ')
 CONF = config.Config("./config")
 
 # Init STT & TTS
+print('[*] Loading STT & TTS... ')
 r = sr.Recognizer()
-tts = tts.TTS(CONF.get_lang(), CONF.get_tts_model())
+tts = tts.TTS(CONF.get_tts_model())
 
 # Load plugins:
+print('[*] Loading plugins... ')
 pm = pluginmanager.PluginManager()
+pm.load_plugins()
 
 # Init LLM
+print('[*] Loading LLM... ')
 llm = llm_con.Connector(
     CONF.get_main_model(),
     CONF.get_main_service(),
@@ -41,6 +47,7 @@ llm = llm_con.Connector(
 )
 
 # Main func
+print('[*] Starting... ')
 def listen_and_repeat(last_communication):
     """Main listen & repeat function"""
     with sr.Microphone() as source:
@@ -49,7 +56,7 @@ def listen_and_repeat(last_communication):
 
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
 
-        if (time.time() - last_communication) < 5:
+        if (time.time() - last_communication) < 10:
             present = True
             message = user_message
         else:
@@ -64,7 +71,9 @@ def listen_and_repeat(last_communication):
                     break
 
         if present:
-            playsound("./lidya/ressources/sounds/success_blip.mp3")
+            song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
+                                          format="mp3")
+            play(song)
             print("[*] Generation process starting... ")
             print(
                 f"[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}..."
@@ -73,7 +82,10 @@ def listen_and_repeat(last_communication):
             try:
                 llm_result = json.loads(llm.interact(message))
             except openai.APIConnectionError:
-                playsound("./lidya/ressources/sounds/fail_blip.mp3")
+                song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
+                                              format="mp3")
+                play(song)
+
                 tts.play_generate_audio(
                     CONF.get_messages()[CONF.get_lang()]["llm_error"]
                 )
@@ -96,7 +108,13 @@ def listen_and_repeat(last_communication):
                 )
 
             print("[*] Generating audio... ")
-            tts.play_generate_audio(llm_result["message"])
+            if isinstance(llm_result, dict) and "message" in llm_result.keys():
+                tts.play_generate_audio(llm_result["message"])
+            else:
+                song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
+                                              format="mp3")
+                play(song)
+                tts.play_generate_audio(llm_result)
 
             print("[*] Process finished. ")
             last_communication = time.time()
