@@ -70,7 +70,7 @@ CONFIG['main_model'] = OPENAI_FAV_MODEL
 
 # Download model
 AVILABLES_LANGUAGES = MODELS.keys()
-USER_LANGUAGE = Prompt.ask('[bold blue][?][/bold blue] 🗣️  What language do you speak best', 
+USER_LANGUAGE = Prompt.ask('[bold blue][?][/bold blue] 🗣️  What language do you speak best',
                            choices=AVILABLES_LANGUAGES, default="en_US")
 STT_MODEL_URL = MODELS[USER_LANGUAGE]
 with console.status(" 🤖 Fetching your model... You have time to get some fresh air!",
@@ -84,7 +84,8 @@ with console.status(" 🤖 Fetching your model... You have time to get some fres
                 f.write(chunk)
 
     with tarfile.open('./models/'+local_filename) as f:
-        f.extractall('./models/'+strip_extension(local_filename, extensions=[".tar.bz2", ".tar.gz"]))
+        f.extractall('./models/'+strip_extension(local_filename, 
+                                                 extensions=[".tar.bz2", ".tar.gz"]))
         f.close()
 
     CONFIG['tts_model'] = strip_extension(local_filename, extensions=[".tar.bz2", ".tar.gz"])
