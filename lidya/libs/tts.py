@@ -4,7 +4,6 @@
 import dimits
 from pydub import AudioSegment
 from pydub.playback import play
-from playsound import playsound
 
 # Main class
 class TTS:
