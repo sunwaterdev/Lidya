@@ -37,10 +37,4 @@ class TTS:
 
         self.generate_audio(text, './cache/tts_output.wav')
         song = AudioSegment.from_file("./cache/tts_output.wav", format="wav")
-        play(song) 
-
-# Tests
-if __name__ == "__main__":
-    TTS = TTS("fr_FR", "siwis-medium")
-    TTS.generate_audio("salut les amis", "./test.wav")
-    TTS.play_generate_audio("Salut les amis")
+        play(song)
