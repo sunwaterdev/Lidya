@@ -5,12 +5,14 @@ License: GPLv3"""
 
 # Imports
 import re
+import sys
+import os
 import tarfile
 import json
 import requests
 from rich import print as dprint
 from rich.console import Console
-from rich.prompt import Prompt
+from rich.prompt import Prompt, Confirm
 
 def strip_extension(fn: str, extensions):
     """Remove extensions from file"""
@@ -30,6 +32,17 @@ CONFIG_FILE = "./config/config.json"
 MESSAGES_FILE = "./config/messages.json"
 KEYS_FILE = "./config/keys.json"
 WAKEWORDS_FILE = "./config/wakewords.json"
+
+try:
+    os.mkdir('cache')
+    os.mkdir('config')
+    os.mkdir('models')
+except FileExistsError:
+    if not Confirm.ask('[bold yellow][?][/bold yellow] 🤔 It looks like you\'ve \
+already set up Lidya. Starting the configuration again will reset Lidya. Do you want to continue?'):
+        dprint('[bold blue][*][/bold blue] ✅ The installation was successfully terminated.')
+        sys.exit(11)
+dprint('[bold blue][*][/bold blue] 💪 The wizard has prepared properly!')
 
 # Collect configuration
 with console.status(" 🌐 Fetching configuration... ",

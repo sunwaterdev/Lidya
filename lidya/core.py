@@ -12,6 +12,7 @@ import time
 import json
 import sys
 import openai
+import requests
 from libs import tts
 from libs import config
 from libs import llm_con
@@ -19,6 +20,12 @@ from libs import pluginmanager
 from pydub import AudioSegment
 from pydub.playback import play
 import speech_recognition as sr
+
+# Version var
+__VERSION__ = "0.0.1"
+LAST_VERSION_URL = "https://pastebin.com/raw/VVp9rRhb"
+
+last_version = requests.get(LAST_VERSION_URL, timeout=100).text
 
 # Edit path
 sys.path.append("./")
@@ -31,6 +38,10 @@ CONF = config.Config("./config")
 print('[*] Loading STT & TTS... ')
 r = sr.Recognizer()
 tts = tts.TTS(CONF.get_tts_model())
+
+# Check version
+if last_version != __VERSION__:
+    tts.play_generate_audio(CONF.get_messages()[CONF.get_lang()]['version_deprec'])
 
 # Load plugins:
 print('[*] Loading plugins... ')
@@ -54,10 +65,9 @@ def listen_and_repeat(last_communication):
         audio = r.listen(source)
         user_message = r.recognize_google(audio, language=CONF.get_lang())
         print(user_message)
-
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
-
-        if (time.time() - last_communication) < 10:
+        print(last_communication)
+        if (time.time() - last_communication) < 60: 
             present = True
             message = user_message
         else:
@@ -96,7 +106,7 @@ def listen_and_repeat(last_communication):
                 sys.exit(21)
 
             print('[*] Processing plugins... ')
-            if "actions" in llm_result.keys():
+            if isinstance(llm_result, dict) and "actions" in llm_result.keys():
                 plugin_result = pm.process_actions(llm_result["actions"])
             else:
                 plugin_result = None
