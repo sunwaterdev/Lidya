@@ -67,7 +67,7 @@ def listen_and_repeat(last_communication):
         print(user_message)
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
         print(last_communication)
-        if (time.time() - last_communication) < 60: 
+        if (time.time() - last_communication) < 60:
             present = True
             message = user_message
         else:
