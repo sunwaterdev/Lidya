@@ -8,10 +8,11 @@ Created by SunWater_
 # Made by SunWater_
 
 # Imports
-import time
 import json
 import sys
-import openai
+import time
+import vosk
+import pyaudio
 import requests
 from libs import tts
 from libs import config
@@ -34,9 +35,19 @@ sys.path.append("./")
 print('[*] Loading config... ')
 CONF = config.Config("./config")
 
-# Init STT & TTS
-print('[*] Loading STT & TTS... ')
-r = sr.Recognizer()
+# Init STT
+print('[*] Loading STT... ')
+model = vosk.Model(lang="fr")
+rec = vosk.KaldiRecognizer(model, 16000)
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16,
+                channels=1,
+                rate=16000,
+                input=True,
+                frames_per_buffer=8192)
+
+# Init TTS
+print('[*] Loading TTS... ')
 tts = tts.TTS(CONF.get_tts_model())
 
 # Check version
@@ -54,35 +65,44 @@ llm = llm_con.Connector(
     CONF.get_main_model(),
     CONF.get_main_service(),
     CONF.get_apikeys(CONF.get_main_service()),
-    CONF.get_prompt().replace("[PLUGINS_LIST]", str(pm.load_plugins()))+CONF.config['continous_prompt'],
+    CONF.config['continous_prompt'],
 )
 
 def main():
-    with sr.Microphone() as source:
-        audio = r.listen(source)
-        user_message = r.recognize_google(audio, language=CONF.get_lang())
-
-        llm_result = json.loads(llm.interact(user_message))
+        data = stream.read(4096)#read in chunks of 4096 bytes
+        if rec.AcceptWaveform(data):#accept waveform of input voice
+            # Parse the JSON result and get the recognized text
+            result = json.loads(rec.Result())
+            recognized_text = result['text']
         
-        llm_tosay = None
 
-        if not llm_result == {}:
-            if isinstance(llm_result, dict):
-                if "actions" in llm_result.keys():
-                    plugin_result = pm.process_actions(llm_result["actions"])
-                    if plugin_result:
-                        print('[!] Plugin usage detected... ')
-                        llm_result = json.loads(
-                            llm.interact("PLUGIN RESULTS:" + str(plugin_result))
-                        )
-                if "message" in llm_result.keys():
-                    llm_tosay = llm_result['message']
+        user_message = recognized_text
 
-            else:
-                llm_tosay = llm_result
+        if user_message != "":
+            llm_result = json.loads(llm.interact(user_message))
+            llm_tosay = None
 
-        if llm_tosay:
-            tts.play_generate_audio(llm_tosay)
+            if not llm_result == {}:
+                if isinstance(llm_result, dict):
+                    if "actions" in llm_result.keys():
+                        plugin_result = pm.process_actions(llm_result["actions"])
+                        if plugin_result:
+                            print('[!] Plugin usage detected... ')
+                            llm_result = json.loads(
+                                llm.interact("PLUGIN RESULTS:" + str(plugin_result))
+                            )
+                    if "message" in llm_result.keys():
+                        llm_tosay = llm_result['message']
+                else:
+                    llm_tosay = llm_result
+
+            print(llm_result)
+            print(llm_tosay)
+            print('[!] Communication detected: '+user_message)
+
+            if llm_tosay:
+                tts.play_generate_audio(llm_tosay)
+                time.sleep(0.5)
 
 while 1:
     try:
