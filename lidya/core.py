@@ -73,80 +73,79 @@ llm = llm_con.Connector(
 print('[*] Starting... ')
 def listen_and_repeat(last_communication):
     """Main listen & repeat function"""
-    data = stream.read(4096)#read in chunks of 4096 bytes
-    if rec.AcceptWaveform(data):#accept waveform of input voice
-        # Parse the JSON result and get the recognized text
+    user_message = None
+    data = stream.read(4096)
+    if rec.AcceptWaveform(data):
         result = json.loads(rec.Result())
-        recognized_text = result['text']
+        user_message = result['text']
     
-    user_message = recognized_text
-
-    print(user_message)
-    #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
     print(last_communication)
-    if (time.time() - last_communication) < 60:
-        present = True
-        message = user_message
-    else:
-        print("[*] New communication detected... ")
-        llm.reset()
-        present = False
-        message = None
-        for phrase in CONF.get_wakewords():
-            if phrase.lower() in user_message.lower():
-                present = True
-                message = user_message.lower().replace(phrase.lower(), "")
-                break
-    if present:
-        song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
-                                      format="mp3")
-        play(song)
-        print("[*] Generation process starting... ")
-        print(
-            f"[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}..."
-        )
-        try:
-            llm_result = json.loads(llm.interact(message))
-        except openai.APIConnectionError:
-            song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
-                                          format="mp3")
+    print(time.time())
+    if user_message:
+        #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
+        if (time.time() - last_communication) < 60:
+            present = True
+            message = user_message
+        else:
+            print("[*] New communication detected... ")
+            llm.reset()
+            present = False
+            message = None
+            for phrase in CONF.get_wakewords():
+                if phrase.lower() in user_message.lower():
+                    present = True
+                    message = user_message.lower().replace(phrase.lower(), "")
+                    break
+        if present:
+            song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
+                                        format="mp3")
             play(song)
-            tts.play_generate_audio(
-                CONF.get_messages()[CONF.get_lang()]["llm_error"]
-            )
+            print("[*] Generation process starting... ")
             print(
-                "[x] Please check LLM configuration. Cannot connect the services "
+                f"[*] API query: {CONF.get_main_service()}, with model {CONF.get_main_model()}..."
             )
-            sys.exit(21)
-        print('[*] Processing plugins... ')
-        if isinstance(llm_result, dict) and "actions" in llm_result.keys():
-            plugin_result = pm.process_actions(llm_result["actions"])
-        else:
-            plugin_result = None
-            print('[x] The LLM forgot to provide any actions. Skiped.')
-        if plugin_result:
-            print('[!] Plugin usage detected... ')
-            llm_result = json.loads(
-                llm.interact("PLUGIN RESULTS:" + str(plugin_result))
-            )
-        print("[*] Generating audio... ")
-        if isinstance(llm_result, dict) and "message" in llm_result.keys():
-            tts.play_generate_audio(llm_result["message"])
-        else:
-            song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
-                                          format="mp3")
-            play(song)
-            tts.play_generate_audio(llm_result)
-        print("[*] Process finished. ")
-        last_communication = time.time()
+            try:
+                llm_result = json.loads(llm.interact(message))
+            except openai.APIConnectionError:
+                song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
+                                            format="mp3")
+                play(song)
+                tts.play_generate_audio(
+                    CONF.get_messages()[CONF.get_lang()]["llm_error"]
+                )
+                print(
+                    "[x] Please check LLM configuration. Cannot connect the services "
+                )
+                sys.exit(21)
+            print('[*] Processing plugins... ')
+            if isinstance(llm_result, dict) and "actions" in llm_result.keys():
+                plugin_result = pm.process_actions(llm_result["actions"])
+            else:
+                plugin_result = None
+                print('[x] The LLM forgot to provide any actions. Skiped.')
+            if plugin_result:
+                print('[!] Plugin usage detected... ')
+                llm_result = json.loads(
+                    llm.interact("PLUGIN RESULTS:" + str(plugin_result))
+                )
+            print("[*] Generating audio... ")
+            if isinstance(llm_result, dict) and "message" in llm_result.keys():
+                tts.play_generate_audio(llm_result["message"])
+            else:
+                song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
+                                            format="mp3")
+                play(song)
+                tts.play_generate_audio(llm_result)
+            print("[*] Process finished. ")
 
-        return last_communication
+            return time.time()
+    else:
+        return 1
 
 # Stop event
-LAST_COMMUNICATION = 0
+LAST_COMMUNICATION = 1
 while 1:
     try:
         LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)
-
     except sr.exceptions.UnknownValueError:
         pass
