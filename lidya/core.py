@@ -13,6 +13,8 @@ import json
 import sys
 import openai
 import requests
+import vosk
+import pyaudio
 from libs import tts
 from libs import config
 from libs import llm_con
@@ -34,9 +36,19 @@ sys.path.append("./")
 print('[*] Loading config... ')
 CONF = config.Config("./config")
 
-# Init STT & TTS
-print('[*] Loading STT & TTS... ')
-r = sr.Recognizer()
+# Init STT
+print('[*] Loading STT... ')
+model = vosk.Model(lang="fr")
+rec = vosk.KaldiRecognizer(model, 16000)
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16,
+                channels=1,
+                rate=16000,
+                input=True,
+                frames_per_buffer=8192)
+
+# Init TTS
+print('[*] Loading TTS... ')
 tts = tts.TTS(CONF.get_tts_model())
 
 # Check version
