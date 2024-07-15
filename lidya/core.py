@@ -153,8 +153,8 @@ def listen_and_repeat(last_communication):
 # Stop event
 LAST_COMMUNICATION = 0
 while 1:
+    time.sleep(0.1)
     try:
-        print(LAST_COMMUNICATION)
         LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)
     except sr.exceptions.UnknownValueError:
         pass
