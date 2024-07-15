@@ -78,26 +78,23 @@ def listen_and_repeat(last_communication):
     if rec.AcceptWaveform(data):
         result = json.loads(rec.Result())
         user_message = result['text']
-    
-    print(last_communication)
-    print(time.time())
+
     if user_message:
-        print(user_message)
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
-        if (time.time() - last_communication) < 60:
-            present = True
+        if (time.time() - last_communication) < 10:
+            communication = True
             message = user_message
         else:
             print("[*] New communication detected... ")
             llm.reset()
-            present = False
+            communication = False
             message = None
             for phrase in CONF.get_wakewords():
                 if phrase.lower() in user_message.lower():
-                    present = True
+                    communication = True
                     message = user_message.lower().replace(phrase.lower(), "")
                     break
-        if present:
+        if communication:
             song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
                                         format="mp3")
             play(song)
@@ -141,7 +138,7 @@ def listen_and_repeat(last_communication):
 
         return time.time()
     else:
-        return 0
+        return last_communication
 
 # Stop event
 LAST_COMMUNICATION = 0
