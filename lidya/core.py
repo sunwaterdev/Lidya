@@ -94,6 +94,7 @@ def listen_and_repeat(last_communication):
                     communication = True
                     message = user_message.lower().replace(phrase.lower(), "")
                     break
+
         if communication:
             song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
                                         format="mp3")
@@ -127,16 +128,25 @@ def listen_and_repeat(last_communication):
                     llm.interact("PLUGIN RESULTS:" + str(plugin_result))
                 )
             print("[*] Generating audio... ")
-            if isinstance(llm_result, dict) and "message" in llm_result.keys():
-                tts.play_generate_audio(llm_result["message"])
+            if isinstance(llm_result, dict):
+                if "message" in llm_result.keys():
+                    tts.play_generate_audio(llm_result["message"])
+                if "finished" in llm_result.keys():
+                    if llm_result["finished"] == True:
+                        last_communication = 0
+                    else:
+                        last_communication = time.time()
+                else:
+                    last_communication = time.time()
             else:
+                last_communication = time.time()
                 song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
                                             format="mp3")
                 play(song)
                 tts.play_generate_audio(llm_result)
             print("[*] Process finished. ")
 
-        return time.time()
+        return last_communication
     else:
         return last_communication
 
