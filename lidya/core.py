@@ -82,6 +82,7 @@ def listen_and_repeat(last_communication):
     print(last_communication)
     print(time.time())
     if user_message:
+        print(user_message)
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
         if (time.time() - last_communication) < 60:
             present = True
@@ -138,14 +139,15 @@ def listen_and_repeat(last_communication):
                 tts.play_generate_audio(llm_result)
             print("[*] Process finished. ")
 
-            return time.time()
+        return time.time()
     else:
-        return 1
+        return 0
 
 # Stop event
-LAST_COMMUNICATION = 1
+LAST_COMMUNICATION = 0
 while 1:
     try:
+        print(LAST_COMMUNICATION)
         LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)
     except sr.exceptions.UnknownValueError:
         pass
