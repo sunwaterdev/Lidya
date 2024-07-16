@@ -105,7 +105,7 @@ with console.status(" 🤖 Fetching your TTS model... You have time to get some 
         f.close()
 
     CONFIG['tts_model'] = strip_extension(local_filename, extensions=[".tar.bz2", ".tar.gz"])
-    
+
 STT_MODEL = STT_MODELS[USER_LANGUAGE]
 with console.status(" 🤖 Fetching your STT model... You have time to get some fresh air! (2/2)",
                     spinner="dots12",
@@ -118,9 +118,11 @@ with console.status(" 🤖 Fetching your STT model... You have time to get some 
                 f.write(chunk)
 
     with zipfile.ZipFile("./models/"+local_filename, 'r') as zip_ref:
-        zip_ref.extractall("./models/"+strip_extension(local_filename, extensions=[".tar.bz2", ".tar.gz", ".zip"]))
+        zip_ref.extractall("./models/"+strip_extension(local_filename,
+                                                       extensions=[".tar.bz2", ".tar.gz", ".zip"]))
 
-    CONFIG['stt_model'] = strip_extension(local_filename, extensions=[".tar.bz2", ".tar.gz", ".zip"])
+    CONFIG['stt_model'] = strip_extension(local_filename,
+                                          extensions=[".tar.bz2", ".tar.gz", ".zip"])
 
 CONFIG['main_language'] = USER_LANGUAGE
 
