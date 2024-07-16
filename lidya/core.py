@@ -133,16 +133,6 @@ def listen_and_repeat(last_communication):
                 play(song)
                 tts.play_generate_audio(llm_result)
             print("[*] Process finished. ")
-        else:
-            print("[*] New communication detected... ")
-            llm.reset()
-            communication = False
-            message = None
-            for phrase in CONF.get_wakewords():
-                if phrase.lower() in user_message.lower():
-                    communication = True
-                    message = user_message.lower().replace(phrase.lower(), "")
-                    break
     return last_communication
 
 # Stop event
