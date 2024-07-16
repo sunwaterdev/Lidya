@@ -6,3 +6,4 @@ openai
 SpeechRecognition
 rich
 pydub
+vosk
