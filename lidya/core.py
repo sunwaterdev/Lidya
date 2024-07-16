@@ -38,7 +38,7 @@ CONF = config.Config("./config")
 
 # Init STT
 print('[*] Loading STT... ')
-model = vosk.Model("./models/"+CONF.config['stt_model'])
+model = vosk.Model(f"./models/{CONF.config['stt_model']}/{CONF.config['stt_model']}")
 rec = vosk.KaldiRecognizer(model, 16000)
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16,
