@@ -78,24 +78,20 @@ def listen_and_repeat(last_communication):
     if rec.AcceptWaveform(data):
         result = json.loads(rec.Result())
         user_message = result['text']
-
+    
     if user_message:
+        print(user_message)
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
-        if (time.time() - last_communication) < 10:
-            communication = True
-            message = user_message
-        else:
-            print("[*] New communication detected... ")
-            llm.reset()
-            communication = False
-            message = None
-            for phrase in CONF.get_wakewords():
-                if phrase.lower() in user_message.lower():
-                    communication = True
-                    message = user_message.lower().replace(phrase.lower(), "")
-                    break
+        present = False
+        for phrase in CONF.get_wakewords():
+            if phrase.lower() in user_message.lower():
+                present = True
+                break
+        
+        print(present)
 
-        if communication:
+        if (time.time() - last_communication) < 10 or present:
+            message = user_message
             song = AudioSegment.from_file("./lidya/ressources/sounds/success_blip.mp3",
                                         format="mp3")
             play(song)
@@ -119,25 +115,17 @@ def listen_and_repeat(last_communication):
             print('[*] Processing plugins... ')
             if isinstance(llm_result, dict) and "actions" in llm_result.keys():
                 plugin_result = pm.process_actions(llm_result["actions"])
+                if plugin_result:
+                    print('[!] Plugin usage detected... ')
+                    llm_result = json.loads(
+                        llm.interact("PLUGIN RESULTS:" + str(plugin_result))
+                    )
             else:
                 plugin_result = None
                 print('[x] The LLM forgot to provide any actions. Skiped.')
-            if plugin_result:
-                print('[!] Plugin usage detected... ')
-                llm_result = json.loads(
-                    llm.interact("PLUGIN RESULTS:" + str(plugin_result))
-                )
             print("[*] Generating audio... ")
-            if isinstance(llm_result, dict):
-                if "message" in llm_result.keys():
-                    tts.play_generate_audio(llm_result["message"])
-                if "finished" in llm_result.keys():
-                    if llm_result["finished"] == True:
-                        last_communication = 0
-                    else:
-                        last_communication = time.time()
-                else:
-                    last_communication = time.time()
+            if isinstance(llm_result, dict) and "message" in llm_result.keys():
+                tts.play_generate_audio(llm_result["message"])
             else:
                 last_communication = time.time()
                 song = AudioSegment.from_file("./lidya/ressources/sounds/fail_blip.mp3",
@@ -145,15 +133,23 @@ def listen_and_repeat(last_communication):
                 play(song)
                 tts.play_generate_audio(llm_result)
             print("[*] Process finished. ")
-
-        return last_communication
-    else:
-        return last_communication
+        else:
+            print("[*] New communication detected... ")
+            llm.reset()
+            communication = False
+            message = None
+            for phrase in CONF.get_wakewords():
+                if phrase.lower() in user_message.lower():
+                    communication = True
+                    message = user_message.lower().replace(phrase.lower(), "")
+                    break
+    return last_communication
 
 # Stop event
 LAST_COMMUNICATION = 0
+print("[*] Done.")
 while 1:
-    time.sleep(0.1)
+    time.sleep(0.01)
     try:
         LAST_COMMUNICATION = listen_and_repeat(LAST_COMMUNICATION)
     except sr.exceptions.UnknownValueError:
