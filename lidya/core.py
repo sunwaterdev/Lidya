@@ -78,7 +78,7 @@ def listen_and_repeat(last_communication):
     if rec.AcceptWaveform(data):
         result = json.loads(rec.Result())
         user_message = result['text']
-    
+
     if user_message:
         print(user_message)
         #user_message = "ok lydia execute la commande 'weather' pour récupérer la météo."
@@ -87,7 +87,7 @@ def listen_and_repeat(last_communication):
             if phrase.lower() in user_message.lower():
                 present = True
                 break
-        
+
         print(present)
 
         if (time.time() - last_communication) < 10 or present:
