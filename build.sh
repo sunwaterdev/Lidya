@@ -4,7 +4,7 @@
 echo "Lidya, this installer and all source code is created by SunWater_ and is licensed under Gnu General Public License v3.0"
 
 # Install python3, pip and portaudio19
-sudo apt install portaudio19-dev python3 python3-pip
+sudo apt install portaudio19-dev python3 python3-pip ffmpeg
 
 # Install requirements
 pip install -r requirements.txt

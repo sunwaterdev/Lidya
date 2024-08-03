@@ -1,5 +1,4 @@
 setuptools
-playsound
 dimits
 PyAudio
 openai
